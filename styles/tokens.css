@@ -1,56 +1,67 @@
-/* tokens.css — zentrale Designvariablen
-   Hier kannst du Farben, Schriften und Abstände projektweit ändern. */
+/* tokens.css – Design-System für das Hanging Jars Shelf Projekt
+   Farben, Typografie, Abstände und Animationen */
 
 :root {
   /* ---- Farben ---- */
-  --color-paper:    #f4efe6;   /* Hintergrund: warmes Recyclingpapier */
-  --color-paper-2:  #ebe3d4;   /* zweite Papierfläche */
-  --color-ink:      #1e1d1b;   /* Tinte: fast schwarz, leicht warm */
-  --color-ink-soft: #4a463f;   /* gedämpfte Tinte für Fließtext */
-  --color-accent:   #1f4031;   /* Tannengrün, einzige Akzentfarbe */
-  --color-accent-2: #2d5a45;
-  --color-glow:     #ffb86b;   /* warmes Lampenlicht */
-  --color-glow-2:   #ffd28a;
+  --color-paper:      #f4efe6;   /* Warmes Recyclingpapier */
+  --color-paper-2:    #ebe3d4;   /* Zweite Papierebene */
+  --color-ink:        #1e1d1b;   /* Fast schwarz, warm */
+  --color-ink-soft:   #4a463f;   /* Gedämpft für Fließtext */
+  --color-accent:     #1f4031;   /* Tannengrün – einzige Akzentfarbe */
+  --color-accent-2:   #2d5a45;   /* Helles Grün für Hover */
+  --color-glow:       #ffb86b;   /* Warmes Lampenlicht */
+  --color-glow-2:     #ffd28a;   /* Helleres Glühen */
+
+  /* Prozess-Farben */
+  --color-step-active:   var(--color-accent);
+  --color-step-done:     var(--color-accent);
+  --color-step-todo:     color-mix(in srgb, var(--color-ink) 20%, transparent);
 
   /* ---- Typografie ---- */
-  --font-serif:  "Fraunces", Georgia, serif;
-  --font-sans:   "Inter", system-ui, -apple-system, sans-serif;
-  --font-hand:   "Caveat", "Comic Sans MS", cursive;
+  --font-serif:   "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans:    "Inter", system-ui, -apple-system, sans-serif;
+  --font-hand:    "Caveat", "Comic Sans MS", cursive;
 
-  --fs-display:  clamp(3rem, 9vw, 7rem);
-  --fs-h1:       clamp(2.4rem, 6vw, 4rem);
-  --fs-h2:       clamp(1.8rem, 4vw, 2.8rem);
-  --fs-h3:       clamp(1.2rem, 2vw, 1.5rem);
-  --fs-lead:     clamp(1.05rem, 1.4vw, 1.25rem);
-  --fs-body:     1rem;
-  --fs-small:    0.875rem;
+  /* Skalierbare Schriftgrößen */
+  --fs-display:   clamp(2.5rem, 8vw, 5rem);
+  --fs-h1:        clamp(1.8rem, 5vw, 3rem);
+  --fs-h2:        clamp(1.4rem, 3.5vw, 2.2rem);
+  --fs-h3:        clamp(1.1rem, 2vw, 1.4rem);
+  --fs-body:      clamp(1rem, 1.2vw, 1.125rem);
+  --fs-small:     0.875rem;
+  --fs-tiny:      0.75rem;
 
-  --lh-tight:    1.05;
-  --lh-base:     1.55;
+  /* Zeilenabstände */
+  --lh-tight:     1.1;
+  --lh-base:      1.6;
 
-  /* ---- Abstände (4-er Skala) ---- */
-  --s-1:  4px;
-  --s-2:  8px;
-  --s-3:  16px;
-  --s-4:  24px;
-  --s-5:  40px;
-  --s-6:  64px;
-  --s-7:  96px;
-  --s-8:  144px;
+  /* ---- Abstände (8-er Skala) ---- */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   16px;
+  --space-4:   24px;
+  --space-5:   32px;
+  --space-6:   48px;
+  --space-7:   64px;
+  --space-8:   96px;
+  --space-9:   128px;
 
   /* ---- Layout ---- */
-  --container:   1180px;
-  --gutter:      clamp(20px, 4vw, 48px);
-  --radius:      2px;        /* kantig, wie geschnitten */
+  --max-width:     900px;
+  --gutter:        clamp(16px, 5vw, 48px);
+  --card-radius:   4px;      /* Leicht abgerundet, kantig wie Pappe */
 
-  /* ---- Linie / Strich ---- */
-  --stroke:      1.3px;
+  /* ---- Linien ---- */
+  --stroke:        1.5px;
+  --stroke-thin:   1px;
 
   /* ---- Animation ---- */
-  --ease:        cubic-bezier(.2,.7,.2,1);
+  --ease:          cubic-bezier(0.2, 0.7, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-base: 400ms;
 }
 
-/* "Lampe an" — leicht verändertes Farbgefühl, etwas wärmer & dunkler */
+/* Dark-Mode für "Lampe an" Zustand */
 [data-lamp="on"] {
   --color-paper:    #2a241d;
   --color-paper-2:  #1f1a14;
@@ -58,3 +69,6 @@
   --color-ink-soft: #d6cfc2;
   --color-accent:   #e9d8a6;
 }
+
+/* Google Fonts einbinden */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500&display=swap');

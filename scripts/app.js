@@ -1,82 +1,130 @@
-/* app.js — Lampe-Toggle, Reveal-Animation, Schritt-Tracker */
+/* app.js – Haupt-Navigation, Progress-Tracking, Prozess-Führung */
 
 (() => {
-  // -------- Lampe an/aus --------
-  const body = document.body;
-  const toggles = document.querySelectorAll('[data-lamp-toggle]');
+  'use strict';
 
-  function setLamp(state) {
-    body.dataset.lamp = state ? 'on' : 'off';
-    toggles.forEach(btn => {
-      btn.setAttribute('aria-pressed', state ? 'true' : 'false');
-      const label = btn.querySelector('.lamp-toggle__label');
-      if (label) label.textContent = state ? 'Lampe aus' : 'Lampe an';
+  // === ELEMENTE ===
+  const progressBar = document.querySelector('.progress-bar__fill');
+  const navDots = document.querySelectorAll('.process-nav__dot');
+  const sections = document.querySelectorAll('.section[data-step]');
+  const lampToggles = document.querySelectorAll('[data-lamp-toggle]');
+  const body = document.body;
+
+  // === ZUSTAND ===
+  let currentStep = 1;
+  const totalSteps = 12;
+
+  // === PROGRESS BAR ===
+  function updateProgress(step) {
+    const percent = ((step - 1) / (totalSteps - 1)) * 100;
+    if (progressBar) {
+      progressBar.style.width = `${percent}%`;
+    }
+  }
+
+  // === NAVIGATION DOTS ===
+  function updateNavDots(activeStep) {
+    navDots.forEach((dot, index) => {
+      const stepNum = index + 1;
+      dot.classList.remove('is-active', 'is-done');
+
+      if (stepNum === activeStep) {
+        dot.classList.add('is-active');
+      } else if (stepNum < activeStep) {
+        dot.classList.add('is-done');
+      }
     });
   }
 
-  toggles.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setLamp(body.dataset.lamp !== 'on');
+  // === SCHRITT WECHSELN ===
+  function goToStep(stepNum) {
+    const targetSection = document.querySelector(`.section[data-step="${stepNum}"]`);
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // === SCROLL OBSERVER ===
+  const observerOptions = {
+    root: null,
+    rootMargin: '-40% 0px -40% 0px',
+    threshold: 0
+  };
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const step = parseInt(entry.target.dataset.step, 10);
+        currentStep = step;
+        updateProgress(step);
+        updateNavDots(step);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    sectionObserver.observe(section);
+  });
+
+  // === NAV DOTS CLICK ===
+  navDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      goToStep(index + 1);
     });
   });
 
-  // -------- Reveal beim Scrollen --------
-  const revealTargets = document.querySelectorAll('.step, .material, .safety li');
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-visible');
-        io.unobserve(e.target);
+  // === LAMPEN TOGGLE (für Licht-Station) ===
+  lampToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const isOn = body.dataset.lamp === 'on';
+      body.dataset.lamp = isOn ? 'off' : 'on';
+
+      toggle.setAttribute('aria-pressed', !isOn);
+      const label = toggle.querySelector('.lamp-toggle__label');
+      if (label) {
+        label.textContent = isOn ? 'Licht an' : 'Licht aus';
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
-  revealTargets.forEach(t => io.observe(t));
+  });
 
-  // -------- Schritt-Tracker (Desktop) --------
-  const steps = document.querySelectorAll('.step');
-  const trackerList = document.getElementById('tracker');
+  // === REVEAL ANIMATION ===
+  const revealElements = document.querySelectorAll('.reveal');
 
-  if (trackerList && steps.length) {
-    steps.forEach(step => {
-      const num = step.dataset.step;
-      const title = step.querySelector('h3')?.textContent || `Schritt ${num}`;
-      const li = document.createElement('li');
-      li.className = 'tracker__item';
-      li.dataset.target = num;
-      li.textContent = `${num}. ${title}`;
-      li.addEventListener('click', () => step.scrollIntoView({ behavior: 'smooth', block: 'center' }));
-      trackerList.appendChild(li);
-    });
-
-    const items = trackerList.querySelectorAll('.tracker__item');
-    const trackIO = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        const num = e.target.dataset.step;
-        const item = trackerList.querySelector(`[data-target="${num}"]`);
-        if (!item) return;
-        if (e.isIntersecting) {
-          items.forEach(i => i.classList.remove('is-active'));
-          item.classList.add('is-active');
-          // alle vorherigen als erledigt markieren
-          items.forEach(i => {
-            if (parseInt(i.dataset.target, 10) < parseInt(num, 10)) {
-              i.classList.add('is-done');
-            }
-          });
-        }
-      });
-    }, { threshold: 0.5 });
-    steps.forEach(s => trackIO.observe(s));
-  }
-
-  // -------- Sanftes Parallax fürs Hero-Glas --------
-  const heroJar = document.getElementById('hero-jar');
-  if (heroJar && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y < 800) {
-        heroJar.style.transform = `translateY(${y * 0.08}px) rotate(${y * 0.01}deg)`;
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
       }
-    }, { passive: true });
-  }
+    });
+  }, { threshold: 0.15 });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // === MATERIAL CHECKLISTE ===
+  const materialItems = document.querySelectorAll('.material-item');
+
+  materialItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('is-checked');
+    });
+  });
+
+  // === JAR OPTION AUSWAHL ===
+  const jarOptions = document.querySelectorAll('.jar-option');
+
+  jarOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      // Entferne Auswahl von allen
+      jarOptions.forEach(opt => opt.classList.remove('is-selected'));
+      // Füge zu geklicktem hinzu
+      option.classList.add('is-selected');
+    });
+  });
+
+  // === INIT ===
+  updateProgress(1);
+  updateNavDots(1);
+
+  console.log('🫙 Hanging Jars Shelf – App initialized');
 })();
