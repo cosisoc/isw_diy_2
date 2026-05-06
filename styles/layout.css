@@ -1,194 +1,143 @@
-/* layout.css – Layout-Grundlagen, Progress-Bar, Section-Struktur */
+/* layout.css – Warme, bastelnahe Navigation */
 
-/* Haupt-Container nimmt volle Breite, begrenzte Inhalte */
-.site-wrapper {
-  position: relative;
-  z-index: 2;
-  min-height: 100vh;
-}
-
-/* Progress-Bar oben fixiert */
-.progress-bar {
+/* Navigation – weicher und charaktervoller */
+.process-nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
+  background: linear-gradient(to bottom, var(--color-paper-light) 60%, transparent);
+  padding: var(--space-2) 0;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 4px;
-  background: color-mix(in srgb, var(--color-ink) 10%, transparent);
+  background: linear-gradient(to right, var(--color-terracotta), var(--color-ochre));
+  border-radius: 0 2px 2px 0;
+  transition: width 0.4s var(--ease);
 }
 
-.progress-bar__fill {
-  height: 100%;
-  width: 0%;
-  background: var(--color-accent);
-  transition: width var(--duration-base) var(--ease);
-}
-
-/* Prozess-Navigation (12 Punkte oben) */
-.process-nav {
-  position: fixed;
-  top: var(--space-4);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 90;
-  display: flex;
-  gap: var(--space-2);
-  background: color-mix(in srgb, var(--color-paper) 90%, transparent);
-  padding: var(--space-2) var(--space-3);
-  border-radius: 999px;
-  backdrop-filter: blur(8px);
-  border: var(--stroke-thin) solid color-mix(in srgb, var(--color-ink) 10%, transparent);
-}
-
-.process-nav__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--color-step-todo);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease);
-  position: relative;
-}
-
-.process-nav__dot:hover {
-  transform: scale(1.3);
-}
-
-.process-nav__dot.is-active {
-  background: var(--color-step-active);
-  transform: scale(1.2);
-}
-
-.process-nav__dot.is-done {
-  background: var(--color-step-done);
-}
-
-.process-nav__dot::after {
-  content: attr(data-step);
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: var(--fs-tiny);
-  margin-top: var(--space-1);
-  opacity: 0;
-  transition: opacity var(--duration-fast);
-  font-family: var(--font-hand);
-  color: var(--color-accent);
-}
-
-.process-nav__dot:hover::after,
-.process-nav__dot.is-active::after {
-  opacity: 1;
-}
-
-/* Jede Sektion nimmt volle Viewport-Höhe */
-.section {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--space-7) var(--gutter);
-  position: relative;
-}
-
-.section__inner {
-  max-width: var(--max-width);
+.process-nav__inner {
+  max-width: 900px;
   margin: 0 auto;
-  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-/* Prozess-Karte (Standard-Layout für die meisten Stationen) */
-.process-card {
-  background: var(--color-paper-2);
-  border: var(--stroke) solid var(--color-ink);
-  border-radius: var(--card-radius);
-  overflow: hidden;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 70vh;
-}
+.process-nav__inner::-webkit-scrollbar { display: none; }
 
-.process-card__visual {
-  aspect-ratio: 16 / 10;
-  background: var(--color-paper);
-  border-bottom: var(--stroke) solid var(--color-ink);
-  position: relative;
+/* Nav Items – wie handgemachte Etiketten */
+.nav-item {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-paper-warm);
+  border-radius: var(--radius-xl);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s var(--ease);
+  border: 2px solid transparent;
 }
 
-.process-card__content {
-  padding: var(--space-5) var(--space-5) var(--space-4);
+.nav-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-warm);
 }
 
-.process-card__footer {
-  padding: 0 var(--space-5) var(--space-5);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Schritt-Nummer-Badge */
-.step-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
+.nav-item__status {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  border: var(--stroke) solid var(--color-ink);
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
   font-weight: 600;
-  background: var(--color-paper);
-  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  transition: all 0.3s var(--ease);
 }
 
-/* Übergangspfeile zwischen Sektionen */
-.section-connector {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(50%);
-  z-index: 10;
+/* Todo – unbeschriebenes Papier */
+.nav-item[data-status="todo"] {
+  background: var(--color-paper-warm);
+  color: var(--color-ink-muted);
 }
 
-.scroll-arrow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
-  font-family: var(--font-hand);
-  font-size: 1.1rem;
-  color: var(--color-accent);
-  animation: bounce 2s infinite;
+.nav-item[data-status="todo"] .nav-item__status {
+  background: var(--color-paper-light);
+  border: 2px dashed var(--color-todo);
+  color: var(--color-ink-muted);
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
+/* Current – wie ein Stempel */
+.nav-item[data-status="current"] {
+  background: var(--color-paper-light);
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+  box-shadow: var(--shadow-warm);
 }
 
-/* Mobile Anpassungen */
-@media (max-width: 640px) {
-  .process-nav {
-    gap: var(--space-1);
-    padding: var(--space-1) var(--space-2);
+.nav-item[data-status="current"] .nav-item__status {
+  background: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+  color: var(--color-paper-light);
+}
+
+/* Done – wie ein Abzeichen */
+.nav-item[data-status="done"] {
+  background: var(--color-sage-light);
+  color: var(--color-done);
+}
+
+.nav-item[data-status="done"] .nav-item__status {
+  background: var(--color-done);
+  border-color: var(--color-done);
+  color: var(--color-paper-light);
+}
+
+/* Main Content */
+.main-content {
+  padding-top: 90px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-bottom: var(--space-6);
+}
+
+/* Sections – wie Seiten in einem Skizzenbuch */
+.step-section {
+  padding: var(--space-3);
+  scroll-margin-top: 100px;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .process-nav__inner {
+    justify-content: center;
+    gap: 1rem;
+    padding: var(--space-3);
   }
 
-  .process-nav__dot {
-    width: 8px;
-    height: 8px;
+  .nav-item {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9375rem;
   }
 
-  .process-card__content {
-    padding: var(--space-4) var(--space-4) var(--space-3);
+  .nav-item__status {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
   }
 
-  .section {
-    padding: var(--space-6) var(--gutter);
-  }
+  .main-content { padding-top: 110px; }
+  .step-section { padding: var(--space-4); }
 }

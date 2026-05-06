@@ -1,31 +1,29 @@
-/* planner.js – Gestaltungs-Planer für Papier und Farben */
+/**
+ * planner.js – Gestaltungs-Planer
+ * Farbauswahl für Papier-Gestaltung
+ */
 
-(() => {
+(function() {
   'use strict';
 
-  // Design-Station nur initialisieren, wenn Elemente vorhanden
   const preview = document.querySelector('.design-preview');
-  if (!preview) return;
-
   const colorSwatches = document.querySelectorAll('.color-swatch');
 
-  // === FARBE WECHSELN ===
+  if (!preview) return;
+
   colorSwatches.forEach(swatch => {
     swatch.addEventListener('click', () => {
-      // Active-State aktualisieren
+      // Remove active von allen
       colorSwatches.forEach(s => s.classList.remove('is-active'));
+      // Add active zu geklicktem
       swatch.classList.add('is-active');
 
-      // Preview-Hintergrund ändern (simuliert Papierfarbe)
+      // Update preview hintergrund
       const color = swatch.dataset.color;
       if (color) {
-        preview.style.backgroundColor = color + '40'; // 40 = 25% Opacity
+        preview.style.backgroundColor = color + '33'; // 20% opacity
       }
     });
   });
 
-  // === MUSTER OVERLAY (optional) ===
-  // Hier könnte später Canvas- oder SVG-basiertes Zeichnen hinzugefügt werden
-
-  console.log('🎨 Design Planner initialized');
 })();

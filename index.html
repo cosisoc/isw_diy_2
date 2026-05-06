@@ -1,17 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Hanging Jars Shelf – Baus dir dein eigenes Regal mit Licht</title>
-  <meta name="description" content="Ein modulares DIY-Regal mit hängenden Jars. Ein Jar wird zum Licht, andere für Aufbewahrung. Gestalte dein eigenes Shelf-System.">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hanging Jars Shelf – DIY Shelf System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Fraunces:opsz,wght@9..144,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
@@ -19,522 +12,235 @@
 </head>
 <body data-lamp="off">
 
-  <!-- Hintergrund-Textur -->
-  <div class="paper-texture" aria-hidden="true"></div>
-
-  <!-- Glüh-Layer (wird bei "Lampe an" sichtbar) -->
   <div class="glow-layer" aria-hidden="true"></div>
 
-  <!-- Progress-Bar -->
-  <div class="progress-bar" aria-hidden="true">
-    <div class="progress-bar__fill"></div>
-  </div>
-
-  <!-- Prozess-Navigation (12 Punkte) -->
-  <nav class="process-nav" aria-label="Prozess-Schritte">
-    <button class="process-nav__dot is-active" data-step="1" aria-label="Schritt 1: Start"></button>
-    <button class="process-nav__dot" data-step="2" aria-label="Schritt 2: Das System"></button>
-    <button class="process-nav__dot" data-step="3" aria-label="Schritt 3: Material"></button>
-    <button class="process-nav__dot" data-step="4" aria-label="Schritt 4: Regal"></button>
-    <button class="process-nav__dot" data-step="5" aria-label="Schritt 5: Jars vorbereiten"></button>
-    <button class="process-nav__dot" data-step="6" aria-label="Schritt 6: Licht"></button>
-    <button class="process-nav__dot" data-step="7" aria-label="Schritt 7: Nutzung"></button>
-    <button class="process-nav__dot" data-step="8" aria-label="Schritt 8: Gestalten"></button>
-    <button class="process-nav__dot" data-step="9" aria-label="Schritt 9: Zusammenbau"></button>
-    <button class="process-nav__dot" data-step="10" aria-label="Schritt 10: Fertig"></button>
-    <button class="process-nav__dot" data-step="11" aria-label="Schritt 11: Sicherheit"></button>
-    <button class="process-nav__dot" data-step="12" aria-label="Schritt 12: Abschluss"></button>
+  <!-- Progress Navigation -->
+  <nav class="process-nav" aria-label="Process">
+    <div class="progress-bar"></div>
+    <div class="process-nav__inner"></div>
   </nav>
 
-  <!-- Haupt-Inhalt -->
-  <main class="site-wrapper">
+  <!-- Main Content - All Steps Visible -->
+  <main class="main-content">
 
-    <!-- ============================================ -->
-    <!-- STATION 1: HERO / INTRO                      -->
-    <!-- PLATZHALTER: Hero-Bild des fertigen Shelf-Systems -->
-    <!-- ============================================ -->
-    <section class="section hero" data-step="1" id="start">
-      <div class="hero__visual">
-        <!-- PLATZHALTER: Große Hero-Illustration -->
-        <div class="placeholder placeholder--hero">
-          <span class="placeholder__label">Hier kommt dein Hero-Bild</span>
+    <!-- STEP 1: Intro -->
+    <section class="step-section" data-step="1" id="step-1">
+      <div class="step-card step-card--intro">
+        <div class="step-card__visual">
+          <img src="assets/images/interaction.thumbnail.png"
+               alt="Hanging Jars Shelf"
+               loading="eager"
+               onerror="this.style.display='none';">
+          <div class="fallback-text" style="display:none;">🏠 Hanging Jars Shelf</div>
         </div>
-      </div>
-
-      <div class="hero__content reveal">
-        <p class="kicker">Ein DIY-Projekt für dein Zimmer</p>
-        <h1 class="hero__title">Hanging Jars Shelf</h1>
-        <p class="hero__lead">
-          Baus dir ein eigenes Regal mit hängenden Gläsern.<br>
-          Eins wird zum Licht. Die anderen befüllst du, wie du magst.
-        </p>
-        <a href="#system" class="btn btn--primary btn--large">Los geht's</a>
-      </div>
-
-      <!-- Scroll-Hinweis -->
-      <div class="section-connector">
-        <a href="#system" class="scroll-arrow">
-          <span>Weiter</span>
-          <span>↓</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================================ -->
-    <!-- STATION 2: DAS SYSTEM                        -->
-    <!-- PLATZHALTER: Explosionszeichnung / Schema    -->
-    <!-- ============================================ -->
-    <section class="section" data-step="2" id="system">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: System-Illustration -->
-            <div class="placeholder placeholder--system">
-              <span class="placeholder__label">System-Diagram: Regal + hängende Jars</span>
-            </div>
-          </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">2</span>
-            <h2>Wie funktioniert's?</h2>
-            <p>
-              Ein Regalbrett. Darunter hängen mehrere Gläser.<br>
-              Eines leuchtet. Die anderen kannst du gestalten oder befüllen.<br>
-              Oben bleibt Platz für deine Sachen.
-            </p>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#start" class="btn-next" style="visibility: hidden;">← Zurück</a>
-            <a href="#material" class="btn-next">Dein Kit →</a>
-          </div>
+        <div class="step-card__content">
+          <span class="step-number">1</span>
+          <h1 class="step-title">Your DIY Shelf System</h1>
+          <p class="step-desc">A shelf with hanging jars. One lights up, the others you fill as you like.</p>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Start</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 3: MATERIAL / KIT                    -->
-    <!-- PLATZHALTER: Material-Flatlay / Übersicht    -->
-    <!-- ============================================ -->
-    <section class="section" data-step="3" id="material">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: Material-Übersicht -->
-            <div class="placeholder placeholder--kit">
-              <span class="placeholder__label">Alle Materialien im Überblick</span>
-            </div>
-          </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">3</span>
-            <h2>Was ist im Kit?</h2>
-            <p>Hak ab, was du hast. Frage eine erwachsene Person, wenn etwas fehlt.</p>
-
-            <!-- Interaktive Material-Liste -->
-            <div class="material-list">
-              <div class="material-item">
-                <span class="material-item__check"></span>
-                <span class="material-item__label">Regalbrett</span>
-              </div>
-              <div class="material-item">
-                <span class="material-item__check"></span>
-                <span class="material-item__label">Halterung</span>
-              </div>
-              <div class="material-item">
-                <span class="material-item__check"></span>
-                <span class="material-item__label">Fairy Lights</span>
-              </div>
-              <div class="material-item">
-                <span class="material-item__check"></span>
-                <span class="material-item__label">3–5 alte Gläser</span>
-              </div>
-              <div class="material-item">
-                <span class="material-item__check"></span>
-                <span class="material-item__label">Transparentpapier</span>
-              </div>
-              <div class="material-item">
-                <span class="material-item__check"></span>
-                <span class="material-item__label">Stifte & Kleber</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#system" class="btn-next">← Zurück</a>
-            <a href="#shelf" class="btn-next">Regal vorbereiten →</a>
-          </div>
+    <!-- STEP 2: System -->
+    <section class="step-section" data-step="2" id="step-2">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>📐</span><span>Shelf + Jars Diagram</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">2</span>
+          <h2 class="step-title">How It Works</h2>
+          <p class="step-desc">Top: Shelf surface. Bottom: Jars to fill. One can be a light.</p>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Got it</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 4: REGAL VORBEREITEN                 -->
-    <!-- PLATZHALTER: Regal-Aufbau / Unterseite       -->
-    <!-- ============================================ -->
-    <section class="section" data-step="4" id="shelf">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: Regal-Vorbereitung -->
-            <!-- Bild zeigt: Unterseite des Regals, wo Jars später hängen -->
-            <div class="placeholder placeholder--shelf">
-              <span class="placeholder__label">Regal-Unterseite mit Halterungen</span>
-            </div>
+    <!-- STEP 3: Material -->
+    <section class="step-section" data-step="3" id="step-3">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>📦</span><span>Materials Overview</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">3</span>
+          <h2 class="step-title">Materials</h2>
+          <div class="material-list">
+            <label class="material-item"><input type="checkbox"><span>Shelf board</span></label>
+            <label class="material-item"><input type="checkbox"><span>Mounting brackets</span></label>
+            <label class="material-item"><input type="checkbox"><span>Fairy lights</span></label>
+            <label class="material-item"><input type="checkbox"><span>3–5 jars</span></label>
+            <label class="material-item"><input type="checkbox"><span>Translucent paper</span></label>
+            <label class="material-item"><input type="checkbox"><span>Markers & glue</span></label>
           </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">4</span>
-            <h2>Das Regal vorbereiten</h2>
-            <p>
-              Das Regal ist die Basis. An der <strong>Unterseite</strong> kommen später die Gläser dran.
-              Die <strong>obere Fläche</strong> bleibt frei – da kannst du später Bücher, Pflanzen oder Deko stellen.
-            </p>
-            <p class="hand-note hand-note--inline">Tipp: Überlege dir vorher, wo das Regal hängen soll.</p>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#material" class="btn-next">← Zurück</a>
-            <a href="#jars-prep" class="btn-next">Jars vorbereiten →</a>
-          </div>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Everything ready</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 5: JARS VORBEREITEN                  -->
-    <!-- PLATZHALTER: Etikett entfernen, reinigen     -->
-    <!-- ============================================ -->
-    <section class="section" data-step="5" id="jars-prep">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: Jars vorbereiten -->
-            <!-- Bild zeigt: Glas in Wasser, Etikett löst sich -->
-            <div class="placeholder placeholder--jar-prep">
-              <span class="placeholder__label">Gläser von Etiketten befreien</span>
-            </div>
-          </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">5</span>
-            <h2>Die Gläser vorbereiten</h2>
-            <p>
-              1. Weiche die Gläser in warmem Wasser ein<br>
-              2. Warte ein paar Minuten, dann lösen sich die Etiketten<br>
-              3. Spüle gründlich aus und trockne sie ab
-            </p>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#shelf" class="btn-next">← Zurück</a>
-            <a href="#licht" class="btn-next">Licht-Option →</a>
-          </div>
+    <!-- STEP 4: Shelf Prep -->
+    <section class="step-section" data-step="4" id="step-4">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>🔧</span><span>Shelf Underside</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">4</span>
+          <h2 class="step-title">Prepare the Shelf</h2>
+          <p class="step-desc">Mount the brackets on the underside. Leave the top free for placing items.</p>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Shelf ready</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 6: LICHT-OPTION                      -->
-    <!-- PLATZHALTER: Fairy Lights in Glas            -->
-    <!-- ============================================ -->
-    <section class="section" data-step="6" id="licht">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: Lichtglas bauen -->
-            <div class="placeholder placeholder--light">
-              <span class="placeholder__label">Fairy Lights in ein Jar einfädeln</span>
-            </div>
-          </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">6</span>
-            <h2>Ein Lichtglas bauen</h2>
-            <p>
-              <strong>Optional:</strong> Wähle eins deiner Gläser als Lichtglas.<br>
-              Lege die Fairy Lights rein. Die Batterie bleibt außerhalb.
-            </p>
-
-            <button class="lamp-toggle" data-lamp-toggle aria-pressed="false">
-              <span class="lamp-toggle__dot"></span>
-              <span class="lamp-toggle__label">Licht an</span>
-            </button>
-
-            <p class="hand-note hand-note--inline">
-              Nicht alle Jars müssen leuchten – eins reicht!
-            </p>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#jars-prep" class="btn-next">← Zurück</a>
-            <a href="#nutzung" class="btn-next">Weitere Jars →</a>
-          </div>
+    <!-- STEP 5: Clean Jars -->
+    <section class="step-section" data-step="5" id="step-5">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>🧽</span><span>Clean Jars</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">5</span>
+          <h2 class="step-title">Prepare the Jars</h2>
+          <p class="step-desc">Soak in warm water to remove labels. Rinse and dry thoroughly.</p>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Jars clean</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 7: FREIE NUTZUNG                     -->
-    <!-- PLATZHALTER: Verschiedene Jar-Inhalte        -->
-    <!-- ============================================ -->
-    <section class="section" data-step="7" id="nutzung">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: Freie Nutzung -->
-            <div class="placeholder placeholder--free">
-              <span class="placeholder__label">Verschiedene Nutzungsideen</span>
-            </div>
-          </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">7</span>
-            <h2>Was kommt in die anderen Jars?</h2>
-            <p>Überlege dir für jedes Glas eine Funktion:</p>
-
-            <div class="jar-options">
-              <div class="jar-option">
-                <span class="jar-option__icon">🌿</span>
-                <span class="jar-option__label">Natur<br>(Steine, Blätter)</span>
-              </div>
-              <div class="jar-option">
-                <span class="jar-option__icon">🧵</span>
-                <span class="jar-option__label">Basteln<br>(Fäden, Knöpfe)</span>
-              </div>
-              <div class="jar-option">
-                <span class="jar-option__icon">🌶️</span>
-                <span class="jar-option__label">Küche<br>(Gewürze)</span>
-              </div>
-              <div class="jar-option">
-                <span class="jar-option__icon">✏️</span>
-                <span class="jar-option__label">Stifte<br>& Mäuse</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#licht" class="btn-next">← Zurück</a>
-            <a href="#gestalten" class="btn-next">Gestalten →</a>
-          </div>
+    <!-- STEP 6: Light -->
+    <section class="step-section" data-step="6" id="step-6">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>✨</span><span>Light Jar</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">6</span>
+          <h2 class="step-title">Light Jar (Optional)</h2>
+          <p class="step-desc">Choose one jar as your light. Put fairy lights inside, battery pack stays out.</p>
+          <button class="lamp-toggle" data-lamp-toggle>
+            <span class="lamp-toggle__dot"></span>
+            <span>Test light</span>
+          </button>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Continue</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 8: GESTALTEN                         -->
-    <!-- PLATZHALTER: Collage, Schichten, Muster      -->
-    <!-- ============================================ -->
-    <section class="section" data-step="8" id="gestalten">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__content" style="padding-bottom: 0;">
-            <span class="step-badge">8</span>
-            <h2>Die Jars gestalten</h2>
-            <p>
-              Umwickel die Gläser mit Transparentpapier.<br>
-              Bemale, schneide Muster, schichte mehrere Lagen.
-            </p>
+    <!-- STEP 7: Usage -->
+    <section class="step-section" data-step="7" id="step-7">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>🌿</span><span>Jar Contents</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">7</span>
+          <h2 class="step-title">What Goes Inside?</h2>
+          <p class="step-desc">Each jar can hold something different. Click to select/deselect:</p>
+          <div class="jar-grid">
+            <button class="jar-option" type="button">🌿<span>Nature</span></button>
+            <button class="jar-option" type="button">🧵<span>Crafts</span></button>
+            <button class="jar-option" type="button">🌶️<span>Kitchen</span></button>
+            <button class="jar-option" type="button">✏️<span>Stationery</span></button>
           </div>
-
-          <!-- Design-Station -->
-          <div class="design-station" style="padding: var(--space-5);">
-            <div class="design-preview">
-              <!-- PLATZHALTER: Gestaltungs-Vorschau -->
-              <div class="placeholder placeholder--design">
-                <span class="placeholder__label">Deine Gestaltungs-Vorschau</span>
-              </div>
-            </div>
-
-            <div class="design-tools">
-              <div class="design-tool-group">
-                <p class="design-tool-group__label">Papierfarbe</p>
-                <div class="color-palette">
-                  <button class="color-swatch is-active" data-color="#f0c987" style="background: #f0c987;" aria-label="Gelb"></button>
-                  <button class="color-swatch" data-color="#e88b6c" style="background: #e88b6c;" aria-label="Orange"></button>
-                  <button class="color-swatch" data-color="#c95d5d" style="background: #c95d5d;" aria-label="Rot"></button>
-                  <button class="color-swatch" data-color="#7aa17a" style="background: #7aa17a;" aria-label="Grün"></button>
-                  <button class="color-swatch" data-color="#7896b8" style="background: #7896b8;" aria-label="Blau"></button>
-                  <button class="color-swatch" data-color="#b88dbf" style="background: #b88dbf;" aria-label="Lila"></button>
-                </div>
-              </div>
-
-              <div class="design-tool-group">
-                <p class="design-tool-group__label">Ideen zum Gestalten</p>
-                <ul style="font-size: var(--fs-small); line-height: 1.8;">
-                  <li>Papier um das Glas wickeln</li>
-                  <li>Zwei Lagen übereinander = spannende Schatten</li>
-                  <li>Formen ausschneiden (Sterne, Herzen)</li>
-                  <li>Mit Stiften Muster malen</li>
-                  <li>Collage aus verschiedenen Papieren</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="process-card__footer" style="border-top: var(--stroke-thin) solid color-mix(in srgb, var(--color-ink) 10%, transparent); margin-top: var(--space-4); padding-top: var(--space-4);">
-            <a href="#nutzung" class="btn-next">← Zurück</a>
-            <a href="#zusammenbau" class="btn-next">Zusammenbauen →</a>
-          </div>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Ideas chosen</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 9: ZUSAMMENBAU                       -->
-    <!-- PLATZHALTER: Regal + Jars montiert           -->
-    <!-- ============================================ -->
-    <section class="section" data-step="9" id="zusammenbau">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: Zusammenbau -->
-            <div class="placeholder placeholder--assembly">
-              <span class="placeholder__label">Jars am Regal befestigen</span>
-            </div>
-          </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">9</span>
-            <h2>Zusammenbauen</h2>
-            <p>
-              Jetzt wird alles verbunden.<br>
-              Befestige die Gläser an der Unterseite des Regals.
-              Die Halterungen sollen fest sitzen.
-            </p>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#gestalten" class="btn-next">← Zurück</a>
-            <a href="#fertig" class="btn-next">Fertiges Objekt →</a>
-          </div>
+    <!-- STEP 8: Design -->
+    <section class="step-section" data-step="8" id="step-8">
+      <div class="step-card step-card--center">
+        <div class="step-card__content">
+          <span class="step-number">8</span>
+          <h2 class="step-title">Design</h2>
+          <p class="step-desc">Wrap with translucent paper. Draw patterns. Layer for interesting shadows.</p>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Designed</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 10: FERTIGES OBJEKT                  -->
-    <!-- PLATZHALTER: Nutzung des fertigen Shelfs     -->
-    <!-- ============================================ -->
-    <section class="section" data-step="10" id="fertig">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__visual">
-            <!-- PLATZHALTER: Fertiges Objekt -->
-            <div class="placeholder placeholder--final">
-              <span class="placeholder__label">Dein Regal in Aktion – oben ablegen, unten hängen</span>
-            </div>
-          </div>
-
-          <div class="process-card__content">
-            <span class="step-badge">10</span>
-            <h2>Dein Shelf-System</h2>
-            <p>
-              Oben stellst du ab: Bücher, Pflanzen, Deko.<br>
-              Unten hängen deine personalisierten Jars.<br>
-              Eins leuchtet, die anderen zeigen, was dir gefällt.
-            </p>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#zusammenbau" class="btn-next">← Zurück</a>
-            <a href="#sicherheit" class="btn-next">Sicherheit →</a>
-          </div>
+    <!-- STEP 9: Assembly -->
+    <section class="step-section" data-step="9" id="step-9">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>🔩</span><span>Assembly</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">9</span>
+          <h2 class="step-title">Assembly</h2>
+          <p class="step-desc">Attach jars to the underside of the shelf. Make sure brackets are tight.</p>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Assembled</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 11: SICHERHEIT                       -->
-    <!-- ============================================ -->
-    <section class="section" data-step="11" id="sicherheit">
-      <div class="section__inner">
-        <div class="process-card reveal">
-          <div class="process-card__content">
-            <span class="step-badge">11</span>
-            <h2>Sicherheit</h2>
-            <p>Damit das Basteln schön bleibt:</p>
-
-            <div class="safety-box" style="margin-top: var(--space-4);">
-              <ul class="safety-list">
-                <li class="safety-item">
-                  <svg class="safety-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 8v4M12 16h.01"/>
-                  </svg>
-                  <span class="safety-item__text">
-                    <strong>Vorsicht mit Glas.</strong> Es kann brechen. Handle vorsichtig.
-                  </span>
-                </li>
-                <li class="safety-item">
-                  <svg class="safety-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="9" cy="12" r="1.5"/>
-                    <circle cx="15" cy="12" r="1.5"/>
-                    <path d="M12 16l-3 3M12 16l3 3"/>
-                  </svg>
-                  <span class="safety-item__text">
-                    <strong>Bei Werkzeugen frag eine erwachsene Person.</strong><br>
-                    Bohren, Schrauben – das braucht Hilfe.
-                  </span>
-                </li>
-                <li class="safety-item">
-                  <svg class="safety-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M5.6 18.4l-1.4 1.4"/>
-                  </svg>
-                  <span class="safety-item__text">
-                    <strong>Nur batteriebetriebene Lichterketten.</strong><br>
-                    Keine heißen Lampen im Glas.
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="process-card__footer">
-            <a href="#fertig" class="btn-next">← Zurück</a>
-            <a href="#abschluss" class="btn-next">Fertig! →</a>
-          </div>
+    <!-- STEP 10: Finished -->
+    <section class="step-section" data-step="10" id="step-10">
+      <div class="step-card">
+        <div class="step-card__visual"><div class="placeholder"><span>🏡</span><span>Finished Shelf</span></div></div>
+        <div class="step-card__content">
+          <span class="step-number">10</span>
+          <h2 class="step-title">Your Shelf</h2>
+          <p class="step-desc">Top: Place items. Bottom: Hanging personalized jars. One lights up, others display contents.</p>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Perfect</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- STATION 12: ABSCHLUSS                        -->
-    <!-- ============================================ -->
-    <section class="section hero" data-step="12" id="abschluss">
-      <div class="hero__content reveal">
-        <p class="kicker">Das war's!</p>
-        <h1 class="hero__title">Dein eigenes Shelf</h1>
-        <p class="hero__lead">
-          Jedes Regal sieht anders aus.<br>
-          Jeder Jar erzählt eine andere Geschichte.<br>
-          Mach es zu deinem eigenen Stück.
-        </p>
-
-        <button class="btn btn--primary btn--large" data-lamp-toggle style="margin-top: var(--space-4);">
-          <span class="lamp-toggle__dot" style="margin-right: 8px;"></span>
-          Licht an/aus
-        </button>
-
-        <p class="hand-note" style="margin-top: var(--space-5);">
-          Zeig dein Shelf deinen Freund:innen ✦
-        </p>
+    <!-- STEP 11: Safety -->
+    <section class="step-section" data-step="11" id="step-11">
+      <div class="step-card step-card--center">
+        <div class="step-card__content">
+          <span class="step-number">11</span>
+          <h2 class="step-title">Safety</h2>
+          <ul class="safety-list">
+            <li>✓ Glass can break – handle with care</li>
+            <li>✓ Ask an adult for help with tools</li>
+            <li>✓ Use only battery-operated lights</li>
+          </ul>
+          <button class="completion-button" type="button">
+            <span class="completion-button__check"></span>
+            <span>Understood</span>
+          </button>
+        </div>
       </div>
+    </section>
 
-      <!-- Zurück zum Anfang -->
-      <div class="section-connector">
-        <a href="#start" class="scroll-arrow">
-          <span>↑</span>
-          <span>Nochmal von vorne</span>
-        </a>
+    <!-- STEP 12: Finish -->
+    <section class="step-section" data-step="12" id="step-12">
+      <div class="step-card step-card--center step-card--final">
+        <div class="step-card__content">
+          <span class="step-number">12</span>
+          <h2 class="step-title">All Done!</h2>
+          <p class="step-desc">Every shelf is different. Make it your own.</p>
+          <button class="lamp-toggle" data-lamp-toggle>
+            <span class="lamp-toggle__dot"></span>
+            <span>Turn light on/off</span>
+          </button>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Scripts -->
-  <script src="scripts/app.js" defer></script>
-  <script src="scripts/planner.js" defer></script>
-
+  <script src="scripts/app.js"></script>
 </body>
 </html>

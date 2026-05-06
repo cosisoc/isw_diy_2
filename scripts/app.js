@@ -1,130 +1,208 @@
-/* app.js – Haupt-Navigation, Progress-Tracking, Prozess-Führung */
-
-(() => {
+/* app.js – Hanging Jars Shelf */
+(function() {
   'use strict';
 
-  // === ELEMENTE ===
-  const progressBar = document.querySelector('.progress-bar__fill');
-  const navDots = document.querySelectorAll('.process-nav__dot');
-  const sections = document.querySelectorAll('.section[data-step]');
-  const lampToggles = document.querySelectorAll('[data-lamp-toggle]');
-  const body = document.body;
+  const TOTAL_STEPS = 12;
 
-  // === ZUSTAND ===
-  let currentStep = 1;
-  const totalSteps = 12;
+  const nav = document.querySelector('.process-nav__inner');
+  const progressBar = document.querySelector('.progress-bar');
+  const steps = document.querySelectorAll('.step-section');
 
-  // === PROGRESS BAR ===
-  function updateProgress(step) {
-    const percent = ((step - 1) / (totalSteps - 1)) * 100;
-    if (progressBar) {
-      progressBar.style.width = `${percent}%`;
-    }
-  }
-
-  // === NAVIGATION DOTS ===
-  function updateNavDots(activeStep) {
-    navDots.forEach((dot, index) => {
-      const stepNum = index + 1;
-      dot.classList.remove('is-active', 'is-done');
-
-      if (stepNum === activeStep) {
-        dot.classList.add('is-active');
-      } else if (stepNum < activeStep) {
-        dot.classList.add('is-done');
-      }
-    });
-  }
-
-  // === SCHRITT WECHSELN ===
-  function goToStep(stepNum) {
-    const targetSection = document.querySelector(`.section[data-step="${stepNum}"]`);
-    if (targetSection) {
-      targetSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  // === SCROLL OBSERVER ===
-  const observerOptions = {
-    root: null,
-    rootMargin: '-40% 0px -40% 0px',
-    threshold: 0
+  let state = {
+    currentStep: 1,
+    completedSteps: [],
+    lampOn: false
   };
 
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const step = parseInt(entry.target.dataset.step, 10);
-        currentStep = step;
-        updateProgress(step);
-        updateNavDots(step);
+  function loadState() {
+    try {
+      const saved = localStorage.getItem('shelfState');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        state.currentStep = parsed.currentStep || 1;
+        state.completedSteps = parsed.completedSteps || [];
+        state.lampOn = parsed.lampOn || false;
+        if (state.lampOn) document.body.dataset.lamp = 'on';
       }
+    } catch (e) {}
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem('shelfState', JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  function createNav() {
+    const labels = ['Start', 'System', 'Materials', 'Shelf', 'Jars', 'Light', 'Usage', 'Design', 'Build', 'Done', 'Safety', 'Finish'];
+
+    nav.innerHTML = labels.map((label, i) => {
+      const stepNum = i + 1;
+      let status = 'todo';
+      if (state.completedSteps.includes(stepNum)) status = 'done';
+      else if (stepNum === state.currentStep) status = 'current';
+
+      return `
+        <button class="nav-item" data-step="${stepNum}" data-status="${status}" type="button">
+          <span class="nav-item__status">${status === 'done' ? '✓' : stepNum}</span>
+          ${status === 'current' ? `<span>${label}</span>` : ''}
+        </button>
+      `;
+    }).join('');
+
+    nav.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const step = parseInt(item.dataset.step);
+        scrollToStep(step);
+      });
     });
-  }, observerOptions);
+  }
 
-  sections.forEach(section => {
-    sectionObserver.observe(section);
-  });
+  function updateProgress() {
+    const percent = ((state.currentStep - 1) / (TOTAL_STEPS - 1)) * 100;
+    progressBar.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+  }
 
-  // === NAV DOTS CLICK ===
-  navDots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      goToStep(index + 1);
+  function scrollToStep(stepNum) {
+    const target = document.getElementById(`step-${stepNum}`);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function initScrollObserver() {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-40% 0px -50% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const stepId = parseInt(entry.target.dataset.step);
+          if (stepId !== state.currentStep) {
+            state.currentStep = stepId;
+            createNav();
+            updateProgress();
+            saveState();
+          }
+        }
+      });
+    }, observerOptions);
+
+    steps.forEach(step => observer.observe(step));
+  }
+
+  function completeStep(stepNum) {
+    // Toggle: if already done, remove it
+    if (state.completedSteps.includes(stepNum)) {
+      state.completedSteps = state.completedSteps.filter(s => s !== stepNum);
+    } else {
+      state.completedSteps.push(stepNum);
+    }
+
+    // Update button visual
+    const btn = document.querySelector(`#step-${stepNum} .completion-button`);
+    if (btn) {
+      if (state.completedSteps.includes(stepNum)) {
+        btn.classList.add('is-done');
+      } else {
+        btn.classList.remove('is-done');
+      }
+    }
+
+    // If completing (not uncompleting) and not on last step, scroll forward
+    if (state.completedSteps.includes(stepNum) && stepNum < TOTAL_STEPS) {
+      setTimeout(() => {
+        scrollToStep(stepNum + 1);
+      }, 300);
+    }
+
+    createNav();
+    updateProgress();
+    saveState();
+  }
+
+  function initCompletionButtons() {
+    document.querySelectorAll('.completion-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const section = btn.closest('.step-section');
+        if (section) {
+          const stepNum = parseInt(section.dataset.step);
+          completeStep(stepNum);
+        }
+      });
     });
-  });
+  }
 
-  // === LAMPEN TOGGLE (für Licht-Station) ===
-  lampToggles.forEach(toggle => {
-    toggle.addEventListener('click', () => {
-      const isOn = body.dataset.lamp === 'on';
-      body.dataset.lamp = isOn ? 'off' : 'on';
+  function initJarOptions() {
+    document.querySelectorAll('.jar-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        // Toggle selection on/off
+        if (opt.classList.contains('is-selected')) {
+          opt.classList.remove('is-selected');
+        } else {
+          opt.classList.add('is-selected');
+        }
+      });
+    });
+  }
 
-      toggle.setAttribute('aria-pressed', !isOn);
-      const label = toggle.querySelector('.lamp-toggle__label');
+  function initLampToggle() {
+    document.querySelectorAll('[data-lamp-toggle]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        state.lampOn = !state.lampOn;
+        document.body.dataset.lamp = state.lampOn ? 'on' : 'off';
+
+        const label = btn.querySelector('.lamp-toggle__label');
+        if (label) {
+          label.textContent = state.lampOn ? 'Turn light off' : 'Turn light on';
+        }
+
+        saveState();
+      });
+    });
+  }
+
+  function initMaterialItems() {
+    document.querySelectorAll('.material-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'INPUT') {
+          const checkbox = item.querySelector('input[type="checkbox"]');
+          checkbox.checked = !checkbox.checked;
+        }
+      });
+    });
+  }
+
+  function init() {
+    loadState();
+    createNav();
+    updateProgress();
+    initScrollObserver();
+    initCompletionButtons();
+    initJarOptions();
+    initLampToggle();
+    initMaterialItems();
+
+    // Update lamp toggle labels on load
+    document.querySelectorAll('[data-lamp-toggle]').forEach(btn => {
+      const label = btn.querySelector('.lamp-toggle__label');
       if (label) {
-        label.textContent = isOn ? 'Licht an' : 'Licht aus';
+        label.textContent = state.lampOn ? 'Turn light off' : 'Turn light on';
       }
     });
-  });
 
-  // === REVEAL ANIMATION ===
-  const revealElements = document.querySelectorAll('.reveal');
+    console.log('🫙 Shelf ready – scroll freely or click through!');
+  }
 
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  revealElements.forEach(el => revealObserver.observe(el));
-
-  // === MATERIAL CHECKLISTE ===
-  const materialItems = document.querySelectorAll('.material-item');
-
-  materialItems.forEach(item => {
-    item.addEventListener('click', () => {
-      item.classList.toggle('is-checked');
-    });
-  });
-
-  // === JAR OPTION AUSWAHL ===
-  const jarOptions = document.querySelectorAll('.jar-option');
-
-  jarOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      // Entferne Auswahl von allen
-      jarOptions.forEach(opt => opt.classList.remove('is-selected'));
-      // Füge zu geklicktem hinzu
-      option.classList.add('is-selected');
-    });
-  });
-
-  // === INIT ===
-  updateProgress(1);
-  updateNavDots(1);
-
-  console.log('🫙 Hanging Jars Shelf – App initialized');
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
