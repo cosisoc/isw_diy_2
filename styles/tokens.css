@@ -1,0 +1,60 @@
+/* tokens.css — zentrale Designvariablen
+   Hier kannst du Farben, Schriften und Abstände projektweit ändern. */
+
+:root {
+  /* ---- Farben ---- */
+  --color-paper:    #f4efe6;   /* Hintergrund: warmes Recyclingpapier */
+  --color-paper-2:  #ebe3d4;   /* zweite Papierfläche */
+  --color-ink:      #1e1d1b;   /* Tinte: fast schwarz, leicht warm */
+  --color-ink-soft: #4a463f;   /* gedämpfte Tinte für Fließtext */
+  --color-accent:   #1f4031;   /* Tannengrün, einzige Akzentfarbe */
+  --color-accent-2: #2d5a45;
+  --color-glow:     #ffb86b;   /* warmes Lampenlicht */
+  --color-glow-2:   #ffd28a;
+
+  /* ---- Typografie ---- */
+  --font-serif:  "Fraunces", Georgia, serif;
+  --font-sans:   "Inter", system-ui, -apple-system, sans-serif;
+  --font-hand:   "Caveat", "Comic Sans MS", cursive;
+
+  --fs-display:  clamp(3rem, 9vw, 7rem);
+  --fs-h1:       clamp(2.4rem, 6vw, 4rem);
+  --fs-h2:       clamp(1.8rem, 4vw, 2.8rem);
+  --fs-h3:       clamp(1.2rem, 2vw, 1.5rem);
+  --fs-lead:     clamp(1.05rem, 1.4vw, 1.25rem);
+  --fs-body:     1rem;
+  --fs-small:    0.875rem;
+
+  --lh-tight:    1.05;
+  --lh-base:     1.55;
+
+  /* ---- Abstände (4-er Skala) ---- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  16px;
+  --s-4:  24px;
+  --s-5:  40px;
+  --s-6:  64px;
+  --s-7:  96px;
+  --s-8:  144px;
+
+  /* ---- Layout ---- */
+  --container:   1180px;
+  --gutter:      clamp(20px, 4vw, 48px);
+  --radius:      2px;        /* kantig, wie geschnitten */
+
+  /* ---- Linie / Strich ---- */
+  --stroke:      1.3px;
+
+  /* ---- Animation ---- */
+  --ease:        cubic-bezier(.2,.7,.2,1);
+}
+
+/* "Lampe an" — leicht verändertes Farbgefühl, etwas wärmer & dunkler */
+[data-lamp="on"] {
+  --color-paper:    #2a241d;
+  --color-paper-2:  #1f1a14;
+  --color-ink:      #f4efe6;
+  --color-ink-soft: #d6cfc2;
+  --color-accent:   #e9d8a6;
+}
