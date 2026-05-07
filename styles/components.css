@@ -107,9 +107,13 @@
 #step-5 .step-card__visual,
 #step-6 .step-card__visual,
 #step-7 .step-card__visual,
-#step-8 .step-card__visual,
 #step-9 .step-card__visual {
   background: none;
+}
+
+/* Step 8: keep a subtle background so the frame looks filled behind the contained image */
+#step-8 .step-card__visual {
+  background: var(--color-paper-warm);
 }
 
 /* Also hide the decorative overlays on illustrated visuals so they don't sit on top of the art */
@@ -208,7 +212,11 @@
   padding: 0;
 }
 
-#step-8 .step-card__visual--contain .illustration img,
+#step-8 .step-card__visual--contain .illustration img {
+  object-fit: contain;
+  padding: var(--space-2);
+}
+
 #step-9 .step-card__visual--contain .illustration img {
   object-fit: cover;
 }
