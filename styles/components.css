@@ -101,10 +101,22 @@
 }
 
 /* Intro illustration should be fully visible (transparent PNG) */
-.step-card--intro .step-card__visual img,
-.step-card--intro .step-card__visual .illustration img {
+.step-card--intro .step-card__visual > img {
   object-fit: contain;
   padding: var(--space-3);
+}
+
+/* Intro uses light/lamp swapped PNGs that include their own background;
+   render full-bleed to avoid a visible rectangular canvas edge. */
+.step-card--intro .step-card__visual .illustration {
+  overflow: hidden;
+}
+
+.step-card--intro .step-card__visual .illustration img {
+  object-fit: cover;
+  padding: 0;
+  transform: scale(1.08);
+  transform-origin: center;
 }
 
 /* ── Illustrationen: Light- / Lamp-Modus ───────────────── */
@@ -121,6 +133,14 @@
   height: 100%;
   object-fit: cover;
   transition: opacity 0.6s var(--ease);
+}
+
+/* For diagram-like visuals: show the full illustration (no cropping) */
+.step-card__visual--contain .illustration img {
+  object-fit: contain;
+  inset: var(--space-3);
+  width: calc(100% - (2 * var(--space-3)));
+  height: calc(100% - (2 * var(--space-3)));
 }
 
 .step-card__visual .illustration .illustration--lamp {
@@ -304,7 +324,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-1);
-  margin: var(--space-3) 0;
+  margin: var(--space-2) 0;
 }
 
 @media (min-width: 520px) {
@@ -316,8 +336,8 @@
 .material-item {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2);
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
   background: var(--color-paper-warm);
   border-radius: var(--radius-md);
   cursor: pointer;
