@@ -100,23 +100,10 @@
   z-index: 1;
 }
 
-/* Intro illustration should be fully visible (transparent PNG) */
-.step-card--intro .step-card__visual > img {
-  object-fit: contain;
-  padding: var(--space-3);
-}
-
-/* Intro uses light/lamp swapped PNGs that include their own background;
-   render full-bleed to avoid a visible rectangular canvas edge. */
-.step-card--intro .step-card__visual .illustration {
-  overflow: hidden;
-}
-
+/* Non-intro/light illustration images fill their slot (they bring their own background) */
 .step-card--intro .step-card__visual .illustration img {
   object-fit: cover;
   padding: 0;
-  transform: scale(1.08);
-  transform-origin: center;
 }
 
 /* ── Illustrationen: Light- / Lamp-Modus ───────────────── */
@@ -135,12 +122,52 @@
   transition: opacity 0.6s var(--ease);
 }
 
-/* For diagram-like visuals: show the full illustration (no cropping) */
+/* For diagram/photo visuals: show the full illustration, no crop */
+.step-card__visual--contain .illustration {
+  overflow: hidden;
+  padding: var(--space-2);
+  box-sizing: border-box;
+}
+
 .step-card__visual--contain .illustration img {
   object-fit: contain;
-  inset: var(--space-3);
-  width: calc(100% - (2 * var(--space-3)));
-  height: calc(100% - (2 * var(--space-3)));
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Step 2: keep breathing room around the diagram */
+#step-2 .step-card__visual--contain .illustration {
+  padding: var(--space-2);
+}
+#step-2 .step-card__visual--contain .illustration img {
+  object-fit: contain;
+}
+
+/* Step 5: fill the frame with cover so it doesn’t letterbox */
+#step-5 .step-card__visual--contain .illustration {
+  padding: 0;
+}
+#step-5 .step-card__visual--contain .illustration img {
+  object-fit: cover;
+}
+
+/* Step 6: slight zoom for more drama */
+#step-6 .step-card__visual--contain .illustration {
+  padding: 0;
+}
+#step-6 .step-card__visual--contain .illustration img {
+  object-fit: cover;
+  transform: scale(1.08);
+  transform-origin: center;
+}
+
+/* Step 7: fill the frame */
+#step-7 .step-card__visual--contain .illustration {
+  padding: 0;
+}
+#step-7 .step-card__visual--contain .illustration img {
+  object-fit: cover;
 }
 
 .step-card__visual .illustration .illustration--lamp {
