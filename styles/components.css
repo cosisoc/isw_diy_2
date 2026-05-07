@@ -101,9 +101,38 @@
 }
 
 /* Intro illustration should be fully visible (transparent PNG) */
-.step-card--intro .step-card__visual img {
+.step-card--intro .step-card__visual img,
+.step-card--intro .step-card__visual .illustration img {
   object-fit: contain;
   padding: var(--space-3);
+}
+
+/* ── Illustrationen: Light- / Lamp-Modus ───────────────── */
+.step-card__visual .illustration {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.step-card__visual .illustration img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s var(--ease);
+}
+
+.step-card__visual .illustration .illustration--lamp {
+  opacity: 0;
+}
+
+[data-lamp="on"] .step-card__visual .illustration .illustration--lamp {
+  opacity: 1;
+}
+
+[data-lamp="on"] .step-card__visual .illustration .illustration--light {
+  opacity: 0;
 }
 
 .fallback-text {
@@ -273,16 +302,22 @@
 /* Material List – wie Einkaufszettel-Checkboxes */
 .material-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-2);
+  grid-template-columns: 1fr;
+  gap: var(--space-1);
   margin: var(--space-3) 0;
+}
+
+@media (min-width: 520px) {
+  .material-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .material-item {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2);
   background: var(--color-paper-warm);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -316,6 +351,26 @@
   accent-color: var(--color-sage);
   cursor: pointer;
 }
+
+.material-item__icon {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex: 0 0 140px;
+}
+
+.material-item__icon img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.6s var(--ease);
+}
+
+.material-item__icon .illustration--lamp { opacity: 0; }
+[data-lamp="on"] .material-item__icon .illustration--lamp { opacity: 1; }
+[data-lamp="on"] .material-item__icon .illustration--light { opacity: 0; }
 
 /* Jar Grid – wie kleine Gläser auf einem Brett */
 .jar-grid {
@@ -746,7 +801,7 @@
     min-height: 300px;
   }
 
-  .material-list { grid-template-columns: repeat(3, 1fr); }
+  .material-list { grid-template-columns: repeat(2, 1fr); }
   .jar-grid { grid-template-columns: repeat(4, 1fr); }
 
   .completion-button {
