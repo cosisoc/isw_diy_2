@@ -100,6 +100,38 @@
   z-index: 1;
 }
 
+/* Where illustrations bring their own background, remove the container's paper gradient so nothing peeks through */
+#step-1 .step-card__visual,
+#step-2 .step-card__visual,
+#step-4 .step-card__visual,
+#step-5 .step-card__visual,
+#step-6 .step-card__visual,
+#step-7 .step-card__visual,
+#step-8 .step-card__visual,
+#step-9 .step-card__visual {
+  background: none;
+}
+
+/* Also hide the decorative overlays on illustrated visuals so they don't sit on top of the art */
+#step-1 .step-card__visual::before,
+#step-2 .step-card__visual::before,
+#step-4 .step-card__visual::before,
+#step-5 .step-card__visual::before,
+#step-6 .step-card__visual::before,
+#step-7 .step-card__visual::before,
+#step-8 .step-card__visual::before,
+#step-9 .step-card__visual::before,
+#step-1 .step-card__visual::after,
+#step-2 .step-card__visual::after,
+#step-4 .step-card__visual::after,
+#step-5 .step-card__visual::after,
+#step-6 .step-card__visual::after,
+#step-7 .step-card__visual::after,
+#step-8 .step-card__visual::after,
+#step-9 .step-card__visual::after {
+  content: none;
+}
+
 /* Non-intro/light illustration images fill their slot (they bring their own background) */
 .step-card--intro .step-card__visual .illustration img {
   object-fit: cover;
@@ -167,6 +199,17 @@
   padding: 0;
 }
 #step-7 .step-card__visual--contain .illustration img {
+  object-fit: cover;
+}
+
+/* Steps 8 & 9: fill the frame */
+#step-8 .step-card__visual--contain .illustration,
+#step-9 .step-card__visual--contain .illustration {
+  padding: 0;
+}
+
+#step-8 .step-card__visual--contain .illustration img,
+#step-9 .step-card__visual--contain .illustration img {
   object-fit: cover;
 }
 
