@@ -12,51 +12,78 @@ body {
   line-height: 1.65;
   color: var(--color-ink);
   background: var(--color-paper);
+  transition: background 1.2s var(--ease), color 1.2s var(--ease);
+  overflow-x: hidden;
 }
 
-/* Subtiler Papier-Textur-Hintergrund */
+/* ── Papier-Textur-Hintergrund ────────────────── */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(212, 168, 75, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(196, 120, 90, 0.03) 0%, transparent 50%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E");
+    /* Tag/hell: warme Lichtfleckerln */
+    radial-gradient(ellipse at 18% 22%, rgba(212, 154, 58, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 82% 78%, rgba(184, 105, 74, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 110%, rgba(110, 150, 112, 0.05) 0%, transparent 60%),
+    /* Textur */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: -1;
+  transition: background 1.2s var(--ease), opacity 1.2s var(--ease);
 }
 
-/* Warmes Glühen für Licht-Modus */
+/* Im Lampenmodus: Textur wird dunkler, Fokus liegt auf dem leuchtenden Regal */
+[data-lamp="on"] body::before {
+  background:
+    /* Nacht: ein großes, warmes Lichtfeld von der Seite (wie Straßenlaterne durchs Fenster) */
+    radial-gradient(circle at 15% 35%, rgba(224, 170, 60, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 85% 65%, rgba(224, 170, 60, 0.07) 0%, transparent 40%),
+    /* Dunklere Textur */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ── Lampe-von-oben Licht-Layer ───────────────── */
 .glow-layer {
   position: fixed;
   inset: 0;
+  /* Erinnerung: warmes Licht aus Glühbirne fällt von oben hinab */
   background:
-    radial-gradient(circle at 30% 40%, rgba(245, 212, 145, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(232, 193, 105, 0.1) 0%, transparent 40%);
+    /* Primär-Licht von oben, wie eine Lampe an der Decke */
+    radial-gradient(ellipse 150% 120% at 50% -10%, rgba(255, 220, 130, 0.35) 0%, transparent 55%),
+    /* Watte-ähnliches Licht in der Mitte */
+    radial-gradient(circle at 30% 35%, rgba(245, 207, 122, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 70% 50%, rgba(255, 235, 180, 0.08) 0%, transparent 35%);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.8s var(--ease);
+  transition: opacity 1s var(--ease);
+  mix-blend-mode: screen;
+  filter: blur(8px);
 }
 
 [data-lamp="on"] .glow-layer {
   opacity: 1;
 }
 
-/* Warmere Headlines */
+/* ── Warme Headlines ──────────────────────────── */
 h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
   color: var(--color-ink);
+  font-variation-settings: "opsz" 36, "SOFT" 60;
+  transition: color 1s var(--ease);
 }
 
 h1 { font-size: var(--fs-display); }
 h2 { font-size: var(--fs-h1); }
 h3 { font-size: var(--fs-h2); }
 
-p { color: var(--color-ink-soft); }
+p {
+  color: var(--color-ink-soft);
+  transition: color 1s var(--ease);
+}
 
 a { color: inherit; text-decoration: none; }
 
@@ -69,12 +96,7 @@ button {
   touch-action: manipulation;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
+img { display: block; max-width: 100%; height: auto; }
 ul, ol { list-style: none; }
 
 :focus-visible {
@@ -84,6 +106,37 @@ ul, ol { list-style: none; }
 }
 
 ::selection {
-  background: var(--color-ochre);
-  color: var(--color-paper-light);
+  background: var(--color-ochre-soft);
+  color: var(--color-ink);
+}
+
+/* ── Regal-Lichtschein: pulsiert bei Licht an ──────────── */
+body::after {
+  content: "";
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse 100% 70% at 50% 0%,
+    rgba(255, 210, 100, 0.20) 0%,
+    rgba(255, 190, 70, 0.08) 35%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  filter: blur(40px);
+  transition: opacity 1.2s var(--ease);
+}
+
+[data-lamp="on"] body::after {
+  opacity: 1;
+  animation: shelf-glow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes shelf-glow-pulse {
+  0%, 100% { opacity: 0.9; filter: blur(40px); }
+  50% { opacity: 1; filter: blur(55px); }
 }

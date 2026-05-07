@@ -7,8 +7,25 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background: linear-gradient(to bottom, var(--color-paper-light) 60%, transparent);
+  background: linear-gradient(to bottom, var(--color-paper) 55%, rgba(244, 236, 216, 0.6) 85%, transparent);
   padding: var(--space-2) 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Dünnes Holzbrett unter der Navigation */
+.process-nav::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 6px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--color-wood) 0 40px,
+      var(--color-wood-dark) 40px 41px,
+      var(--color-wood) 41px 80px);
+  opacity: 0.55;
+  border-radius: 1px;
 }
 
 .progress-bar {

@@ -14,6 +14,17 @@
 
   <div class="glow-layer" aria-hidden="true"></div>
 
+  <!-- Schwebendes Mini-Regal mit 3 Gläsern: Licht-Toggle -->
+  <button class="floating-shelf" data-lamp-toggle type="button" aria-label="Licht an/aus">
+    <span class="floating-shelf__cord" aria-hidden="true"></span>
+    <span class="floating-shelf__board" aria-hidden="true">
+      <span class="jar"></span>
+      <span class="jar jar--light"></span>
+      <span class="jar"></span>
+    </span>
+    <span class="floating-shelf__hint">ziehen ✦</span>
+  </button>
+
   <!-- Progress Navigation -->
   <nav class="process-nav" aria-label="Process">
     <div class="progress-bar"></div>
@@ -27,8 +38,8 @@
     <section class="step-section" data-step="1" id="step-1">
       <div class="step-card step-card--intro">
         <div class="step-card__visual">
-          <img src="assets/images/interaction.thumbnail.png"
-               alt="Hanging Jars Shelf"
+          <img src="assets/illustrations/glas_and_top.png"
+            alt="Minimal illustration of jar and lid"
                loading="eager"
                onerror="this.style.display='none';">
           <div class="fallback-text" style="display:none;">🏠 Hanging Jars Shelf</div>
